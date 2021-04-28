@@ -1,37 +1,36 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import Rating from "../Rating/Rating";
 
-const INITIAL_VALUES = {
-  title: "",
-  picture: "",
-  description: "",
-};
+// const INITIAL_VALUES = {
+//   title: "",
+//   img: "",
+//   description: "",
+// };
 
 function Modalmovie({ handleAddMovie }) {
   const [show, setShow] = useState(false);
-  const [rate, setRate] = useState(0);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [form, setForm] = useState(INITIAL_VALUES);
+  const [form, setForm] = useState({});
+  const handleInputChange = (event) => {
+    // ES6 will replace [name] by the current name value e.g. if name = "title" => [name] = title. This feature is called computed property names
+    return setForm({
+      ...form,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const handleSave = () => {
-    handleAddMovie(form);
-    handleClose();
-    setForm(INITIAL_VALUES);
+    return handleAddMovie(form);
+    // handleClose();
+    // setForm({});
   };
 
   /**
    *
    * @param {Object} event an object that has the information about the input we are currently changing
    */
-  const handleInputChange = (event) => {
-    const { target } = event;
-    const { name, value } = target;
-    // ES6 will replace [name] by the current name value e.g. if name = "title" => [name] = title. This feature is called computed property names
-    setForm((prevForm) => ({ ...prevForm, [name]: value }));
-  };
 
   return (
     <div>
@@ -58,7 +57,7 @@ function Modalmovie({ handleAddMovie }) {
               <Form.Label>Picture</Form.Label>
               <Form.Control
                 type="text"
-                name="picture"
+                name="img"
                 onChange={handleInputChange}
                 placeholder="Enter movie picture"
               />
@@ -75,14 +74,19 @@ function Modalmovie({ handleAddMovie }) {
             </Form.Group>
 
             <Form.Label>Movie Rate: </Form.Label>
-            <Rating rate={rate} setRate={setRate} />
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSave}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              handleSave();
+              handleClose();
+            }}
+          >
             Save
           </Button>
         </Modal.Footer>

@@ -1,4 +1,4 @@
-const moviesData = [
+const moviesdata = [
   {
     id: 1,
     title: "Nader && Chargui",
@@ -26,4 +26,4 @@ const moviesData = [
   },
 ];
 
-export default moviesData;
+export default moviesdata;
